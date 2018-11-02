@@ -1,15 +1,16 @@
 <?php
 include('includes/config.php');
-
+$productid = $_GET['id'];
 $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-$productssql="SELECT * FROM products";
+$productssql="SELECT * FROM products WHERE p_id=$productid";
 
-$products = array();
+$products;
 if($conn){
     $result = mysqli_query($conn, $productssql);
 	if (mysqli_num_rows($result) > 0) {
 		while($row1 = mysqli_fetch_assoc($result)) {
-			array_push($products,$row1);
+      $products=$row1;
+      //array_push($products,$row1);
 		}
 	}
 }
