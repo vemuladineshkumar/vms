@@ -15,13 +15,13 @@
 <legend>PRODUCTS</legend>
 
 <!-- Text input-->
-<div class="form-group">
+<!--<div class="form-group">
   <label class="col-md-4 control-label" for="product_id">PRODUCT ID</label>  
   <div class="col-md-4">
   <input id="product_id" name="product_id" placeholder="PRODUCT ID" class="form-control input-md" required="" type="text">
     
   </div>
-</div>
+</div>-->
 
 <!-- Text input-->
 <div class="form-group">

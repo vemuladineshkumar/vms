@@ -50,7 +50,7 @@ if($conn){
           <td><?php echo $ps['p_name'] ?></td>
           <td><?php echo $ps['p_description'] ?></td>
           <td class="text-right"><?php echo "Rs.".number_format((float)$ps['p_price'], 2, '.', ''); ?></td>
-          <td><a href="/vms/editproduct.php" class="btn"><i class="fa fa-edit"></i></a><a href="delete.php?id=<?php echo $ps['p_id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
+          <td><a href="/vms/editproduct.php?id=<?php echo $ps['p_id'] ?>" class="btn"><i class="fa fa-edit"></i></a><a href="delete.php?id=<?php echo $ps['p_id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
 
         </tr>
         <?php }
