@@ -63,17 +63,18 @@ if($conn){
 			<?php
 	foreach($products as $ps){
 ?>
-				<li>
-					<a href="#">
+				<li><a href="/vms/singleproductpage.php?id=<?php echo $ps['p_id'] ?>">
+					
 						<img src="img/property_1.jpg" alt="" title="" class="property_img"/>
-					</a>
+				
 					<span class="price"><?php echo $ps['p_price'] ?></span>
 					<div class="property_details">
 						<h1>
-							<a href="#">Fuisque dictum tortor at purus libero</a>
+							Fuisque dictum tortor at purus libero
 						</h1>
 						<h2>2 kitchens, 2 bed, 2 bath... <span class="property_size">(288ftsq)</span></h2>
 					</div>
+					</a>
 				</li>
 				<?php }
 	?> 
