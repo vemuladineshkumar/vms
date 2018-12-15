@@ -1,8 +1,9 @@
 <?php
-session_start();
-include('includes/config.php');
 
-$conn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+
+include('common/header.php');
+
+
 if(!empty($_GET['id'])){
   $productid = $_GET['id'];
 $productssql="SELECT * FROM products WHERE p_id=$productid";
@@ -17,26 +18,21 @@ if($conn){
 		}
 	}
 }
-if(!empty($_GET['addcart'])){
-	$cp_qty = $_GET['quantity'];
-	$c_userid = $_SESSION['userdata']['id'];
-	
-	$productssql="SELECT * FROM cart WHERE p_id=$productid and user_id=$c_userid";
-	$result = mysqli_query($conn, $productssql);
-	if(mysqli_num_rows($result) > 0){
-		$query="UPDATE cart SET qty= qty+$cp_qty where user_id = $c_userid and p_id = $productid";
-	}else{
-		$query="INSERT INTO cart (p_id, qty, user_id) VALUES (".$products['p_id'].",". $cp_qty.",". $c_userid.")";
-	}
-	$result = mysqli_query($conn, $query);
-}
+
 
 }
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Product Page</title>
+		<style>
+		.hero{
+			background:none;
+		}
+		header.hed {
+    background: red;
+}
+		</style><title>Product Page</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="styles/normalize.css">
 		<link rel="stylesheet" type="text/css" href="styles/styles.css">
@@ -74,7 +70,7 @@ if(!empty($_GET['addcart'])){
 				</details>
                 <p>Price: &#x20b9;<?php echo $products['p_price'] ?></p>
 				<div class="container">
-	<form action="<?= $_SERVER['PHP_SELF']?>?id=<?php echo $products['p_id'].'&addcart=true'  ?>" method ="get">
+	<form action="/vms/carthandler.php" method ="get">
 	<div class="row">
                         <div class="col-lg-2">
                                         <div class="input-group">
@@ -94,9 +90,9 @@ if(!empty($_GET['addcart'])){
                                 </div>
                         </div>
 	</div>
-</div><br>
+
 				
-				<button>Add to Cart</button>
+				<input type="submit" value="Add to Cart">
 				</form>
 
 				<button>Buy Now</button>

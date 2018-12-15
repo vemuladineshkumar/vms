@@ -38,6 +38,8 @@ if($conn){
           <th>Name</th>
           <th>Description</th>
           <th class="text-right">Price</th>
+          <th>cat_id</th>
+          <th>subcat_id</th>
           <th>Action</th>
         </tr>
       </thead>

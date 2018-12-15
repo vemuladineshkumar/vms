@@ -1,6 +1,6 @@
 <?php
 include('common/header.php');
-include('includes/config.php');
+
 
 $conn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 $productssql="SELECT * FROM products";
