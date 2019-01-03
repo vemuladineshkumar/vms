@@ -18,6 +18,4 @@ if(!empty($_GET['addcart'])){
 	$result = mysqli_query($conn, $query);
 }
 header("location: singleproductpage.php?id=$productid");
-
-
 ?>

@@ -95,7 +95,7 @@ if($conn){
 				<input type="submit" value="Add to Cart">
 				</form>
 
-				<button>Buy Now</button>
+				<a href="/vms/buynownew.php?id=<?php echo $products['p_id'];?>">Buy Now</button>
 				
 			</section>
 		</div>

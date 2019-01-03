@@ -1,21 +1,39 @@
-<?php
-session_start();
-include('includes/config.php');
+<?php 
 
-$conn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-$c_userid = $_SESSION['userdata']['id'];
-$productssql="SELECT * FROM cart as c left join products as p on p.p_id = c.p_id WHERE user_id = $c_userid";
+include('common/header.php');
 
-$products = array();
-if($conn){
-    $result = mysqli_query($conn, $productssql);
-	if (mysqli_num_rows($result) > 0) {
-		while($row1 = mysqli_fetch_assoc($result)) {
-      //$products=$row1;
-      array_push($products,$row1);
-		}
-	}
+
+$ordered_by = $_SESSION['userdata']['id'];
+
+if($conn->connect_errno > 0){
+    echo"error db connection";
+exit;
+}   
+$selectsql = "SELECT * FROM orders WHERE ordered_by=$ordered_by";
+//$selectsql = "SELECT *,orders.created_on as 'orderdate' FROM orders left join order_line on orders.id = order_line.order_id left join products on order_line.p_id = products.p_id where orders.ordered_by = $ordered_by";
+$orders= array();
+$result = $conn->query($selectsql);
+while ($row = $result->fetch_object()){
+    array_push ($orders,$row);
 }
+// $result = $conn->query($selectsql);
+// while ($row = $result->fetch_object()){
+
+// 
+// $orders= array();
+// $result = $conn->query($selectsql);
+// while ($row = $result->fetch_object()){
+//     $cq = "SELECT * FROM `order_line` left join products on order_line.p_id = products.p_id where order_id = $row->id";
+//     $resultc = $conn->query($cq);
+//     $row->line = array();
+//     while ($rowcc = $resultc->fetch_object()){
+//         array_push ($row->line(),$rowcc);
+//     }
+//     array_push ($orders,$row);
+// }
+// $selectsql = "SELECT * FROM orders WHERE ordered_by=$ordered_by";
+
+
 ?>
 <html>
   <head>
@@ -65,36 +83,30 @@ if($conn){
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
 						<tr>
-							<th style="width:50%">Product</th>
-							<th style="width:10%">Price</th>
-							<th style="width:8%">Quantity</th>
-							<th style="width:22%" class="text-center">Subtotal</th>
+							<th style="width:50%">order Id</th>
+							<th style="width:10%"> ordered by</th>
+							<th style="width:8%">ordered date</th>
+							<th style="width:22%" class="text-center">total</th>
 							<th style="width:10%"></th>
 						</tr>
 					</thead>
 					<tbody>
-					<?php foreach($products as $pro ) { ?>
+                   <?php foreach($orders as $ord) { ?>
 						<tr>
 							<td data-th="Product">
-								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
-									<div class="col-sm-10">
-										<h4 class="nomargin"><?php echo $pro['p_name']; ?></h4>
-										<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
-									</div>
-								</div>
+                            <?php echo $ord->id; ?>
 							</td>
-							<td data-th="Price"><?php echo $pro['p_price']; ?></td>
+							<td data-th="Price"><?php echo $ord->ordered_by; ?></td>
 							<td data-th="Quantity">
-								<input type="number" class="form-control text-center" value="<?php echo $pro['qty']; ?>">
+                            <?php echo $ord->created_on; ?>
 							</td>
-							<td data-th="Subtotal" class="text-center"><?php echo $pro['p_price'] * $pro['qty'];  ?></td>
+							<td data-th="Subtotal" class="text-center"> <?php echo $ord->total_amount; ?></td>
 							<td class="actions" data-th="">
 								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
 								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
 							</td>
 						</tr>
-					<?php } ?>
+                   <?php } ?>
 					</tbody>
 					<tfoot>
 						<tr class="visible-xs">
@@ -104,7 +116,7 @@ if($conn){
 							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-							<td><a href="/vms/checkout.php" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 				</table>

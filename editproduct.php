@@ -15,7 +15,7 @@ if($conn){
 		}
 	}
 }
-}
+
 
 if(!empty($_POST['product_id'])){
   $productid = $_POST['product_id'];
